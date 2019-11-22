@@ -1,0 +1,82 @@
+﻿@model CryptoApp.Models.CurrencyModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    <h4>CurrencyModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+      
+        <dt>
+            @Html.DisplayNameFor(model => model.FROMSYMBOL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FROMSYMBOL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TOSYMBOL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TOSYMBOL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PRICE)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PRICE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HIGHDAY)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HIGHDAY)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LOWDAY)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LOWDAY)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CHANGEDAY)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CHANGEDAY)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CHANGEPCTDAY)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CHANGEPCTDAY)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CHANGEHOUR)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CHANGEHOUR)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CHANGEPCTHOUR)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CHANGEPCTHOUR)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MKTCAP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MKTCAP)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
+
