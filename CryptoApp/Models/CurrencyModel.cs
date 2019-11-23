@@ -63,13 +63,22 @@ namespace CryptoApp.Models
         [DataType(DataType.Currency)]
         public decimal MKTCAP { get; set; }
 
-        //[Display(Name = "Select a Crypto Currency ")]
-        //public List<SelectListItem> Countries { get; } = new List<SelectListItem>
-        //{
-        //    new SelectListItem{Value= "ETH", Text="Ethereum"},
-        //    new SelectListItem{Value= "BTC", Text="Bitcoin"},
-        //    new SelectListItem{Value= "DOGE", Text="DogeCoin"},
-        //};
+        [JsonProperty]
+        [Display(Name = "Amount: ")]
+        [DataType(DataType.Currency)]
+        public decimal AmountToBuyOrSell { get; set; }
+
+        [Display(Name = "Select a Cryptocurrency")]
+        public string CryptoSymbol { get; set; }
+
+        [Display(Name = "Select a Cryptocurrency")]
+        public List<SelectListItem> CryptoSymbols { get; } = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "BTC", Text = "Bitcoin" },
+        new SelectListItem { Value = "LTC", Text = "Litecoin" },
+       // new SelectListItem { Value = "DOGE", Text = "Dogecoin"  }, //DOGE COin would throw errors despite the api giving correct info for DOGE
+        new SelectListItem { Value = "ETH", Text = "Ethereum"  },
+    };
 
     }
 }

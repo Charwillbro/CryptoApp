@@ -10,9 +10,7 @@ namespace CryptoApp.Services
 
         public CryptoTransactionService(GetCryptoInfoService getCryptoInfoService)
         {
-            _getCryptoInfoService = getCryptoInfoService;
-          
-
+            _getCryptoInfoService = getCryptoInfoService;  
         }
 
         public TransactionModel BuyCryptoPerPiece(TransactionModel transactionModel)//user wants to buy one bitcoin
@@ -46,8 +44,6 @@ namespace CryptoApp.Services
 
             return transactionModel;
         }
-
-
 
         public TransactionModel bindTransactionModel(TransactionModel transactionModel, decimal inCashOnHand, string cryptoSymbol, decimal amountToSell)//user wants to buy one bitcoin
         {
@@ -88,6 +84,5 @@ namespace CryptoApp.Services
 
             return transactionModel;
         }
-
     }
 }
