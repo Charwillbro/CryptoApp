@@ -98,7 +98,8 @@
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
-    <a asp-action="Transactions" asp-route-id="@Model.FROMSYMBOL">Buy/Sell</a> |
+    <a asp-action="Transactions" asp-route-id="@Model.FROMSYMBOL">Transactions</a> |
+    <a asp-action="Wallet" >Wallet</a> |
     <a asp-action="Index" asp-route-id="@Model.CryptoSymbol">REFRESH</a> |
 </div>
 

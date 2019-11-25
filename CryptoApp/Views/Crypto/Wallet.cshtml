@@ -1,0 +1,83 @@
+﻿@model CryptoApp.Models.WalletModel
+
+@{
+    ViewData["Title"] = "Wallet2";
+}
+
+<h2>Wallet2</h2>
+
+<h4>WalletModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Wallet2">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TotalAccountValue" class="control-label"></label>
+                <input asp-for="TotalAccountValue" class="form-control" />
+                <span asp-validation-for="TotalAccountValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="USD" class="control-label"></label>
+                <input asp-for="USD" class="form-control" />
+                <span asp-validation-for="USD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BTC" class="control-label"></label>
+                <input asp-for="BTC" class="form-control" />
+                <span asp-validation-for="BTC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BTCValue" class="control-label"></label>
+                <input asp-for="BTCValue" class="form-control" />
+                <span asp-validation-for="BTCValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ETH" class="control-label"></label>
+                <input asp-for="ETH" class="form-control" />
+                <span asp-validation-for="ETH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ETHValue" class="control-label"></label>
+                <input asp-for="ETHValue" class="form-control" />
+                <span asp-validation-for="ETHValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LTC" class="control-label"></label>
+                <input asp-for="LTC" class="form-control" />
+                <span asp-validation-for="LTC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LTCValue" class="control-label"></label>
+                <input asp-for="LTCValue" class="form-control" />
+                <span asp-validation-for="LTCValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DOGE" class="control-label"></label>
+                <input asp-for="DOGE" class="form-control" />
+                <span asp-validation-for="DOGE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DOGEValue" class="control-label"></label>
+                <input asp-for="DOGEValue" class="form-control" />
+                <span asp-validation-for="DOGEValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountToBuyOrSell" class="control-label"></label>
+                <input asp-for="AmountToBuyOrSell" class="form-control" />
+                <span asp-validation-for="AmountToBuyOrSell" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

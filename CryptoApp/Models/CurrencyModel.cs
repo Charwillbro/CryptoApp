@@ -74,9 +74,9 @@ namespace CryptoApp.Models
         [Display(Name = "Select a Cryptocurrency")]
         public List<SelectListItem> CryptoSymbols { get; } = new List<SelectListItem>
     {
-        new SelectListItem { Value = "BTC", Text = "Bitcoin" },
         new SelectListItem { Value = "LTC", Text = "Litecoin" },
-       // new SelectListItem { Value = "DOGE", Text = "Dogecoin"  }, //DOGE COin would throw errors despite the api giving correct info for DOGE
+        new SelectListItem { Value = "BTC", Text = "Bitcoin" },
+        new SelectListItem { Value = "DOGE", Text = "Dogecoin"  }, //DOGE COin would throw errors despite the api giving correct info for DOGE
         new SelectListItem { Value = "ETH", Text = "Ethereum"  },
     };
 
