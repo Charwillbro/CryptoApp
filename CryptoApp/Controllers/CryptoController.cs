@@ -75,8 +75,7 @@ namespace CryptoApp.Controllers
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-     
+            } 
 
             var transactionModel = new TransactionModel
             {
