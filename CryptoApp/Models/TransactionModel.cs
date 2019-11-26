@@ -10,5 +10,6 @@
         public decimal DOGE { get; set; }
         public decimal AmountToBuyOrSell { get; set; }
         public string CryptoSymbol { get; set; }
+        public decimal AmountOnHand { get; set; }
     }
 }

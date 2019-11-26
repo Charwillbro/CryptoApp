@@ -1,4 +1,5 @@
-﻿using CryptoApp.Models;
+﻿using CryptoApp.Data;
+using CryptoApp.Models;
 using System;
 
 namespace CryptoApp.Services
@@ -7,10 +8,12 @@ namespace CryptoApp.Services
     public class CryptoTransactionService
     {
         public readonly GetCryptoInfoService _getCryptoInfoService;
+        private readonly ApplicationDbContext _context;
 
-        public CryptoTransactionService(GetCryptoInfoService getCryptoInfoService)
+        public CryptoTransactionService(GetCryptoInfoService getCryptoInfoService, ApplicationDbContext context)
         {
-            _getCryptoInfoService = getCryptoInfoService;  
+            _getCryptoInfoService = getCryptoInfoService;
+            _context = context;
         }
 
         public TransactionModel BuyCryptoPerPiece(TransactionModel transactionModel)//user wants to buy one bitcoin
@@ -25,7 +28,7 @@ namespace CryptoApp.Services
            // Console.WriteLine("########################" + outCashOnHand + "########################");
 
             transactionModel = bindTransactionModel(transactionModel, outCashOnHand, transactionModel.CryptoSymbol, transactionModel.AmountToBuyOrSell);
-
+            _context.SaveChanges();
             return transactionModel;
         }
 
@@ -41,7 +44,7 @@ namespace CryptoApp.Services
            // Console.WriteLine("########################" + outCashOnHand + "########################");
 
             transactionModel = bindTransactionModel(transactionModel, outCashOnHand, transactionModel.CryptoSymbol, 0 - transactionModel.AmountToBuyOrSell);
-
+            _context.SaveChanges();
             return transactionModel;
         }
 
@@ -57,18 +60,22 @@ namespace CryptoApp.Services
             if (transactionModel.CryptoSymbol == "ETH")
             {
                 transactionModel.ETH += amountToSell;
+                transactionModel.AmountOnHand = transactionModel.ETH;
             }
             else if (transactionModel.CryptoSymbol == "BTC")
             {
                 transactionModel.BTC += amountToSell;
+                transactionModel.AmountOnHand = transactionModel.BTC;
             }
             else if (transactionModel.CryptoSymbol == "DOGE")
             {
                 transactionModel.DOGE += amountToSell;
+                transactionModel.AmountOnHand = transactionModel.DOGE;
             }
             else if (transactionModel.CryptoSymbol == "LTC")
             {
                 transactionModel.LTC += amountToSell;
+                transactionModel.AmountOnHand = transactionModel.LTC;
             }
             else
             {
@@ -84,7 +91,7 @@ namespace CryptoApp.Services
             Console.WriteLine("Num of LTC: $" + transactionModel.LTC + "########################");
             Console.WriteLine("Num of DOGE: $" + transactionModel.DOGE + "########################");
             Console.WriteLine("Total Account Value: $" + transactionModel.TotalAccountValue + "########################");
-
+            _context.SaveChanges();
             return transactionModel;
         }
 
@@ -106,16 +113,33 @@ namespace CryptoApp.Services
         }
         public WalletModel GetWalletContents(TransactionModel transactionModel)//Get the total value of the users account
         {
-            WalletModel wallet = new WalletModel();
+            WalletModel wallet = new WalletModel
+            {
+                USD = transactionModel.USD,
+                BTC = transactionModel.BTC,
+                ETH = transactionModel.ETH,
+                LTC = transactionModel.LTC,
+                DOGE = transactionModel.DOGE,
 
-            wallet.USD = transactionModel.USD;
-            wallet.BTCValue = _getCryptoInfoService.GetCryptoPrice("BTC") * transactionModel.BTC;
-            wallet.ETHValue = _getCryptoInfoService.GetCryptoPrice("ETH") * transactionModel.ETH;
-            wallet.LTCValue = _getCryptoInfoService.GetCryptoPrice("LTC") * transactionModel.LTC;
-            wallet.DOGEValue = _getCryptoInfoService.GetCryptoPrice("DOGE") * transactionModel.DOGE;
+                BTCValue = _getCryptoInfoService.GetCryptoPrice("BTC") * transactionModel.BTC,
+                ETHValue = _getCryptoInfoService.GetCryptoPrice("ETH") * transactionModel.ETH,
+                LTCValue = _getCryptoInfoService.GetCryptoPrice("LTC") * transactionModel.LTC,
+                DOGEValue = _getCryptoInfoService.GetCryptoPrice("DOGE") * transactionModel.DOGE
+            };
             wallet.TotalAccountValue = wallet.BTCValue + wallet.ETHValue + wallet.LTCValue + wallet.DOGEValue + wallet.USD;
 
+            _context.SaveChanges();
             return wallet;
+        }
+
+        public SellViewModel SellCrypto( SellViewModel Sell)
+        {
+          
+            // TAKING IN THE SELL VIEW MODEL AND RUNNING THE SELL TRANSACTION. 
+            // NOT SURE WHAT TO RETURN JUST YET. MAYBE TRANSACTION VIEW MODEL.
+
+
+            return Sell;
         }
     }
 }

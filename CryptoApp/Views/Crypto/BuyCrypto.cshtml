@@ -1,0 +1,49 @@
+﻿@model CryptoApp.Models.SellViewModel
+
+@{
+    ViewData["Title"] = "BuyCrypto";
+}
+
+<h2>BuyCrypto</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ExecuteBuy">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="USD" class="control-label"></label>
+                <input asp-for="USD" class="form-control" disabled />
+                <span asp-validation-for="USD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CryptoSymbol" class="control-label"></label>
+                <input asp-for="CryptoSymbol" class="form-control"  />
+                <span asp-validation-for="CryptoSymbol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CryptoPrice" class="control-label"></label>
+                <input asp-for="CryptoPrice" class="form-control" disabled />
+                <span asp-validation-for="CryptoPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountOnHand" class="control-label"></label>
+                <input asp-for="AmountOnHand" class="form-control" disabled />
+                <span asp-validation-for="AmountOnHand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountToSell" class="control-label"></label>
+                <input asp-for="AmountToSell" class="form-control" />
+                <span asp-validation-for="AmountToSell" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Buy" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
