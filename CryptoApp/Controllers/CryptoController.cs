@@ -1,6 +1,8 @@
 ﻿using CryptoApp.Data;
+using CryptoApp.Filters;
 using CryptoApp.Models;
 using CryptoApp.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace CryptoApp.Controllers
 {
+    [HandleException]
+    [ValidateModel]
     public class CryptoController : Controller
     {
         public readonly CryptoTransactionService _cryptoTransactionService;
@@ -20,55 +24,22 @@ namespace CryptoApp.Controllers
             _getCryptoInfoService = getCryptoInfoService;
             _userManager = userManager;
             _context = context;
-
         }
 
 
-        public async System.Threading.Tasks.Task<IActionResult> Index(string CryptoSymbol)
+        public IActionResult Index(string CryptoSymbol)
         {
-            //var user = await _userManager.GetUserAsync(User);
-            //if (user == null)
-            //{
-            //    throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            //}
             if (CryptoSymbol == null)
             {
-                CryptoSymbol = "BTC";
+                CryptoSymbol = "LTC";
             }
 
-            //var transactionModel = new TransactionModel
-            //{
-            //    USD = user.USD, //the amount of cash available to spend
-            //    BTC = user.BTC, //Number of crypto owned
-            //    ETH = user.ETH, //Number of crypto owned
-            //    LTC = user.LTC, //Number of crypto owned
-            //    DOGE = user.DOGE//Number of crypto owned
-            //};
-
-            //// testing values //
-            ////string cryptoSymbol = "ETH"; //which crypto you want to see/buy/sell
-            //decimal amountToBuyOrSell = 1; //how much of that crypto you want to buy or sell
-
-            //transactionModel.AmountToBuyOrSell = amountToBuyOrSell;
-            //transactionModel.CryptoSymbol = CryptoSymbol;
-
-            //transactionModel = _cryptoTransactionService.BuyCryptoPerPiece(transactionModel);
-
-            //user.USD = transactionModel.USD;
-            //user.BTC = transactionModel.BTC;
-            //user.ETH = transactionModel.ETH;
-            //user.LTC = transactionModel.LTC;
-            //user.DOGE = transactionModel.DOGE;
-            //user.TotalAccountValue = transactionModel.TotalAccountValue;
-
-            //_context.SaveChanges();
-          
             CurrencyModel cryptoObject = _getCryptoInfoService.GetCryptoObject(CryptoSymbol).Result;
 
             return View(cryptoObject);
         }
 
-
+        [Authorize]
         public async System.Threading.Tasks.Task<IActionResult> Wallet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -87,12 +58,10 @@ namespace CryptoApp.Controllers
                 
             };
 
-
             WalletModel wallet = _cryptoTransactionService.GetWalletContents(transactionModel);
 
             return View(wallet);
         }
-
 
 
         public async Task<IActionResult> SellCrypto(string cryptoSymbol, decimal amountOnHand)
@@ -127,7 +96,6 @@ namespace CryptoApp.Controllers
                 USD = transaction.USD
             };
 
-
             return View(sell);
         }
 
@@ -138,7 +106,6 @@ namespace CryptoApp.Controllers
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-           
 
             var transaction = new TransactionModel
             {
@@ -160,9 +127,9 @@ namespace CryptoApp.Controllers
                 USD = transaction.USD
             };
 
-
             return View(sell);
         }
+
         public async Task<IActionResult> ExecuteSale([Bind("USD,CryptoPrice,AmountToSell,CryptoSymbol")] SellViewModel inSell)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -182,20 +149,27 @@ namespace CryptoApp.Controllers
                 AmountToBuyOrSell = inSell.AmountToSell
             };
 
-            transaction = _cryptoTransactionService.SellCryptoPerPiece(transaction);
+            if (_cryptoTransactionService.CanSellCrypto(transaction))
+            {
+                transaction = _cryptoTransactionService.SellCryptoPerPiece(transaction);
 
-            //Updating the user so the database can save the new values
-            user.USD = transaction.USD;
-            user.BTC = transaction.BTC;
-            user.ETH = transaction.ETH;
-            user.LTC = transaction.LTC;
-            user.DOGE = transaction.DOGE;
-            user.TotalAccountValue = transaction.TotalAccountValue;
-            _context.SaveChanges();
+                user.USD = transaction.USD;
+                user.BTC = transaction.BTC;
+                user.ETH = transaction.ETH;
+                user.LTC = transaction.LTC;
+                user.DOGE = transaction.DOGE;
+                user.TotalAccountValue = transaction.TotalAccountValue;
+                _context.SaveChanges();
 
-            return RedirectToAction("Wallet", "Crypto");
-            //return View(sell);
+                return RedirectToAction("Wallet", "Crypto");
+            }
+            else
+            {
+                return RedirectToAction("Wallet", "Crypto");
+            }
+          
         }
+
         public async Task<IActionResult> ExecuteBuy([Bind("USD,CryptoPrice,AmountToSell,CryptoSymbol")] SellViewModel inSell)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -215,20 +189,24 @@ namespace CryptoApp.Controllers
                 AmountToBuyOrSell = inSell.AmountToSell
             };
 
-            transaction = _cryptoTransactionService.BuyCryptoPerPiece(transaction);
+            if (_cryptoTransactionService.CanBuyCrypto(transaction))
+            {
+                transaction = _cryptoTransactionService.BuyCryptoPerPiece(transaction);
 
-            //Updating the user so the database can save the new values
-            user.USD = transaction.USD;
-            user.BTC = transaction.BTC;
-            user.ETH = transaction.ETH;
-            user.LTC = transaction.LTC;
-            user.DOGE = transaction.DOGE;
-            user.TotalAccountValue = transaction.TotalAccountValue;
-            _context.SaveChanges();
+                user.USD = transaction.USD;
+                user.BTC = transaction.BTC;
+                user.ETH = transaction.ETH;
+                user.LTC = transaction.LTC;
+                user.DOGE = transaction.DOGE;
+                user.TotalAccountValue = transaction.TotalAccountValue;
+                _context.SaveChanges();
 
-            return RedirectToAction("Wallet", "Crypto");
-            //return View(sell);
+                return RedirectToAction("Wallet", "Crypto");
+            }
+            else
+            {
+                return RedirectToAction("Wallet", "Crypto");
+            }
         }
-
     }
 }

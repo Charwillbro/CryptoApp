@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using CryptoApp.Models;
+using CryptoApp.Entities;
 
 namespace CryptoApp.Data
 {
@@ -22,6 +23,7 @@ namespace CryptoApp.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-      
+        public DbSet<ExceptionLog> Exceptions { get; set; }
+
     }
 }

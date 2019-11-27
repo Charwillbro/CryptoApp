@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using CryptoApp.Services;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace CryptoApp
@@ -16,12 +9,31 @@ namespace CryptoApp
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
-           
+
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+              .ConfigureLogging((context, logging) =>
+              {
+                  logging.AddEventLog();
+              })
+            .ConfigureLogging(logging =>
+            {
+                // clear default logging providers
+                logging.ClearProviders();
+
+                // add built-in providers manually, as needed 
+                logging.AddConsole();
+                logging.AddDebug();
+                logging.AddEventLog();
+                logging.AddEventSourceLogger();
+
+            })
+
+        
+        .ConfigureLogging(builder => builder.AddConsole())
                 .Build();
     }
 }

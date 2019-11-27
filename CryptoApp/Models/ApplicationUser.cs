@@ -12,7 +12,5 @@ namespace CryptoApp.Models
         public decimal LTC { get; set; }
         public decimal DOGE { get; set; }
 
-
-
     }
 }

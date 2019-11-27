@@ -101,13 +101,12 @@ namespace CryptoApp.Services
             decimal bTCValue = _getCryptoInfoService.GetCryptoPrice("BTC") * transactionModel.BTC;
             decimal eTHValue = _getCryptoInfoService.GetCryptoPrice("ETH") * transactionModel.ETH;
             decimal lTCValue = _getCryptoInfoService.GetCryptoPrice("LTC") * transactionModel.LTC;
+            decimal dOGEValue = _getCryptoInfoService.GetCryptoPrice("DOGE") * transactionModel.DOGE;
 
-            decimal totalValue = bTCValue + eTHValue + lTCValue + transactionModel.USD;
-
+            decimal totalValue = bTCValue + eTHValue + lTCValue + dOGEValue + transactionModel.USD;
 
            // Console.WriteLine("######################## TOTAL ACCT Value ########################");
            // Console.WriteLine("########################" + totalValue + "########################");
-
 
             return totalValue;
         }
@@ -131,15 +130,89 @@ namespace CryptoApp.Services
             _context.SaveChanges();
             return wallet;
         }
-
-        public SellViewModel SellCrypto( SellViewModel Sell)
+        public Boolean CanSellCrypto(TransactionModel transactionModel)
         {
-          
-            // TAKING IN THE SELL VIEW MODEL AND RUNNING THE SELL TRANSACTION. 
-            // NOT SURE WHAT TO RETURN JUST YET. MAYBE TRANSACTION VIEW MODEL.
 
+            Decimal aboveZero = 0;
 
-            return Sell;
+            if (transactionModel.CryptoSymbol == "ETH")
+            {
+                aboveZero = transactionModel.ETH - transactionModel.AmountToBuyOrSell;
+                if (aboveZero >= 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            else if (transactionModel.CryptoSymbol == "BTC")
+            {
+                aboveZero = transactionModel.BTC - transactionModel.AmountToBuyOrSell;
+                if (aboveZero >= 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (transactionModel.CryptoSymbol == "DOGE")
+            {
+                aboveZero = transactionModel.DOGE - transactionModel.AmountToBuyOrSell;
+                if (aboveZero >= 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (transactionModel.CryptoSymbol == "LTC")
+            {
+                aboveZero = transactionModel.LTC - transactionModel.AmountToBuyOrSell;
+                if (aboveZero >= 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception("No Currency Available");
+            }
         }
+
+        public Boolean CanBuyCrypto(TransactionModel transactionModel)
+        {
+
+            decimal aboveZero;
+
+           
+                aboveZero = transactionModel.USD - (transactionModel.AmountToBuyOrSell * _getCryptoInfoService.GetCryptoPrice(transactionModel.CryptoSymbol));
+      
+
+            if(transactionModel.CryptoSymbol == null)
+            {
+                throw new Exception("No Currency Specified");
+            }
+
+            if(aboveZero >= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }
