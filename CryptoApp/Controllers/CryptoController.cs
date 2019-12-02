@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace CryptoApp.Controllers
 {
+   
     [HandleException]
     [ValidateModel]
     public class CryptoController : Controller
@@ -63,7 +64,7 @@ namespace CryptoApp.Controllers
             return View(wallet);
         }
 
-
+        
         public async Task<IActionResult> SellCrypto(string cryptoSymbol, decimal amountOnHand)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -99,6 +100,7 @@ namespace CryptoApp.Controllers
             return View(sell);
         }
 
+  
         public async Task<IActionResult> BuyCrypto(string cryptoSymbol, decimal amountOnHand)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -130,6 +132,7 @@ namespace CryptoApp.Controllers
             return View(sell);
         }
 
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExecuteSale([Bind("USD,CryptoPrice,AmountToSell,CryptoSymbol")] SellViewModel inSell)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -170,6 +173,7 @@ namespace CryptoApp.Controllers
           
         }
 
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExecuteBuy([Bind("USD,CryptoPrice,AmountToSell,CryptoSymbol")] SellViewModel inSell)
         {
             var user = await _userManager.GetUserAsync(User);

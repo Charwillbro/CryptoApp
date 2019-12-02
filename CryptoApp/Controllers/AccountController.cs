@@ -244,7 +244,7 @@ namespace CryptoApp.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(CryptoController.Index), "Home");
+            return RedirectToAction(nameof(CryptoController.Index), "Crypto");
         }
 
         [HttpPost]
@@ -332,7 +332,7 @@ namespace CryptoApp.Controllers
         {
             if (userId == null || code == null)
             {
-                return RedirectToAction(nameof(CryptoController.Index), "Home");
+                return RedirectToAction(nameof(CryptoController.Index), "Crypto");
             }
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
@@ -452,7 +452,7 @@ namespace CryptoApp.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(CryptoController.Index), "Home");
+                return RedirectToAction(nameof(CryptoController.Index), "Crypto");
             }
         }
 

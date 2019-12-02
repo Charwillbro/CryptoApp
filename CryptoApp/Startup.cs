@@ -63,7 +63,7 @@ namespace CryptoApp
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Crypto}/{action=Index}/{id?}");
+                    template: "{controller=Crypto}/{action=Index}");
             });
         }
     }

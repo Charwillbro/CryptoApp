@@ -43,7 +43,8 @@ namespace CryptoApp.Models
 
         //Amount the price has changed today as a percentage
         [JsonProperty]
-        [DisplayFormat(DataFormatString = "{0:$#.#######}")]
+        [Display(Name = "Percent Change Today: ")]
+        [DisplayFormat(DataFormatString = "{0:#.#######}")]
         public decimal CHANGEPCTDAY { get; set; }
 
         //Amount the price has changed in the past hour in dollars
@@ -76,7 +77,7 @@ namespace CryptoApp.Models
     {
         new SelectListItem { Value = "LTC", Text = "Litecoin" },
         new SelectListItem { Value = "BTC", Text = "Bitcoin" },
-        new SelectListItem { Value = "DOGE", Text = "Dogecoin"  }, //DOGE COin would throw errors despite the api giving correct info for DOGE
+        new SelectListItem { Value = "DOGE", Text = "Dogecoin"  }, 
         new SelectListItem { Value = "ETH", Text = "Ethereum"  },
     };
 
