@@ -46,7 +46,7 @@ namespace CryptoApp
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -63,7 +63,7 @@ namespace CryptoApp
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Crypto}/{action=Index}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
