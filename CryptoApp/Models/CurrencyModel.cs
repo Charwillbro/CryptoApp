@@ -20,22 +20,22 @@ namespace CryptoApp.Models
         //Price of cryptocurrency in USD
         [JsonProperty]
         [Display(Name = "Current Price: ")]
-        [DataType(DataType.Currency)]
-       // [DisplayFormat(DataFormatString = "{0:$#.#######}")]
+       
+        [DisplayFormat(DataFormatString = "{0:C3}")]
         public decimal PRICE { get; set; }
 
         //Highest Price of cryptocurrency today
         [JsonProperty]
         [Display(Name = "Highest Price Today: ")]
-        [DataType(DataType.Currency)]
-        // [DisplayFormat(DataFormatString = "{0:$#.#######}")]
+      
+        [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal HIGHDAY { get; set; }
 
         //Lowest Price of cryptocurrency today
         [JsonProperty]
         [Display(Name = "Lowest Price Today: ")]
-        [DataType(DataType.Currency)]
-        //[DisplayFormat(DataFormatString = "{0:$#.#######}")]
+        
+        [DisplayFormat(DataFormatString = "{0:C6}")]
         public decimal LOWDAY { get; set; }
 
         //Amount the price has changed today in dollars
