@@ -20,28 +20,25 @@ namespace CryptoApp.Models
         //Price of cryptocurrency in USD
         [JsonProperty]
         [Display(Name = "Current Price: ")]
-       
-        [DisplayFormat(DataFormatString = "{0:C3}")]
+        [DisplayFormat(DataFormatString = "{0:C6}")]
         public decimal PRICE { get; set; }
 
         //Highest Price of cryptocurrency today
         [JsonProperty]
         [Display(Name = "Highest Price Today: ")]
-      
-        [DisplayFormat(DataFormatString = "{0:C0}")]
+        [DisplayFormat(DataFormatString = "{0:C6}")]
         public decimal HIGHDAY { get; set; }
 
         //Lowest Price of cryptocurrency today
         [JsonProperty]
         [Display(Name = "Lowest Price Today: ")]
-        
         [DisplayFormat(DataFormatString = "{0:C6}")]
         public decimal LOWDAY { get; set; }
 
         //Amount the price has changed today in dollars
         [JsonProperty]
         [Display(Name = "Price Change Today: ")]
-        [DisplayFormat(DataFormatString = "{0:$#.#######}")]
+        [DisplayFormat(DataFormatString = "{0:C6}")]
         public decimal CHANGEDAY { get; set; }
 
         //Amount the price has changed today as a percentage
@@ -53,7 +50,7 @@ namespace CryptoApp.Models
         //Amount the price has changed in the past hour in dollars
         [JsonProperty]
         [Display(Name = "Price Change in the Past Hour: ")]
-        [DisplayFormat(DataFormatString = "{0:$#.#######}")]
+        [DisplayFormat(DataFormatString = "{0:C6}")]
         public decimal CHANGEHOUR { get; set; }
 
         //Amount the price has changed in the past hour as a percentage
@@ -64,12 +61,11 @@ namespace CryptoApp.Models
         //The total value of this crypto currency on the market AKA MarketCap
         [JsonProperty]
         [Display(Name = "Market Cap: ")]
-        [DisplayFormat(DataFormatString = "{0:$#.#######}")]
+        [DisplayFormat(DataFormatString = "{0:C6}")]
         public decimal MKTCAP { get; set; }
 
         [JsonProperty]
         [Display(Name = "Amount: ")]
-        [DisplayFormat(DataFormatString = "{0:$#.#######}")]
         public decimal AmountToBuyOrSell { get; set; }
 
         [Display(Name = "Select a Cryptocurrency")]
