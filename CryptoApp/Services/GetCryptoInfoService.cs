@@ -1,15 +1,14 @@
 ﻿using CryptoApp.Filters;
 using CryptoApp.Models;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CryptoApp.Services
 {
     [HandleException]
+    [ValidateModel]
     public class GetCryptoInfoService
     {
         public GetCryptoInfoService()
@@ -17,26 +16,6 @@ namespace CryptoApp.Services
 
         }
 
-        public async Task<string> GetApiData()
-        {
-            try
-            {
-                var client = new HttpClient();
-
-                var result = await client.GetAsync("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR&api_key=a9635f00f6b5c85f2579780156071dd8e0dea96246d246f076ff4153f470dbca");
-                // Use newtonsoft here to project the Json result into an object, then you can return an object instead of the string.
-
-                return await result.Content.ReadAsStringAsync();
-
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-        
-       
         public async Task<CurrencyModel> GetCryptoObject(string cryptoSymbol)
         {
             
@@ -58,10 +37,9 @@ namespace CryptoApp.Services
 
                 //Convert the JSON string data into our currency object
                 JsonConvert.PopulateObject(dataAsString, CurrencyObject);
-            throw new Exception("Meow");
+           
                 return CurrencyObject;
 
-           
         }
         public decimal GetCryptoPrice(string cryptoSymbol)
         {

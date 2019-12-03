@@ -27,7 +27,7 @@ namespace CryptoApp.Controllers
             _context = context;
         }
 
-        [HandleException]
+       
         public IActionResult Index(string CryptoSymbol)
         {
             if (CryptoSymbol == null)
@@ -44,11 +44,7 @@ namespace CryptoApp.Controllers
         public async System.Threading.Tasks.Task<IActionResult> Wallet()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            } 
-
+          
             var transactionModel = new TransactionModel
             {
                 USD = user.USD, //the amount of cash available to spend
@@ -64,14 +60,11 @@ namespace CryptoApp.Controllers
             return View(wallet);
         }
 
-        
+        [Authorize]
         public async Task<IActionResult> SellCrypto(string cryptoSymbol, decimal amountOnHand)
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+          
             if (cryptoSymbol == null)
             {
                 cryptoSymbol = "LTC";
@@ -100,15 +93,11 @@ namespace CryptoApp.Controllers
             return View(sell);
         }
 
-  
+  [Authorize]
         public async Task<IActionResult> BuyCrypto(string cryptoSymbol, decimal amountOnHand)
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
+            
             var transaction = new TransactionModel
             {
                 USD = user.USD, //the amount of cash available to spend
@@ -132,14 +121,11 @@ namespace CryptoApp.Controllers
             return View(sell);
         }
 
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExecuteSale([Bind("USD,CryptoPrice,AmountToSell,CryptoSymbol")] SellViewModel inSell)
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
 
             var transaction = new TransactionModel
             {
@@ -173,14 +159,11 @@ namespace CryptoApp.Controllers
           
         }
 
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExecuteBuy([Bind("USD,CryptoPrice,AmountToSell,CryptoSymbol")] SellViewModel inSell)
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
 
             var transaction = new TransactionModel
             {

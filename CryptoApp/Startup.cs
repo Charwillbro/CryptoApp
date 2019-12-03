@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CryptoApp.Data;
 using CryptoApp.Models;
 using CryptoApp.Services;
+using CryptoApp.Filters;
 
 namespace CryptoApp
 {
@@ -34,6 +35,10 @@ namespace CryptoApp
                 .AddDefaultTokenProviders();
 
             // Add application services.
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new HandleExceptionAttribute());
+            });
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<GetCryptoInfoService>();
             services.AddScoped<CryptoTransactionService>();
