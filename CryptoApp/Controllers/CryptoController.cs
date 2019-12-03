@@ -27,7 +27,7 @@ namespace CryptoApp.Controllers
             _context = context;
         }
 
-
+        [HandleException]
         public IActionResult Index(string CryptoSymbol)
         {
             if (CryptoSymbol == null)

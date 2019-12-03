@@ -1,4 +1,5 @@
-﻿using CryptoApp.Models;
+﻿using CryptoApp.Filters;
+using CryptoApp.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace CryptoApp.Services
 {
+    [HandleException]
     public class GetCryptoInfoService
     {
         public GetCryptoInfoService()
@@ -34,11 +36,10 @@ namespace CryptoApp.Services
             }
         }
         
-        [ExceptionFilter]
+       
         public async Task<CurrencyModel> GetCryptoObject(string cryptoSymbol)
         {
-            try
-            {
+            
                 string getAPIString = $"https://min-api.cryptocompare.com/data/pricemultifull?fsyms={cryptoSymbol}&tsyms=USD,EUR&api_key=a9635f00f6b5c85f2579780156071dd8e0dea96246d246f076ff4153f470dbca";
 
                 CurrencyModel CurrencyObject = new CurrencyModel();
@@ -57,15 +58,10 @@ namespace CryptoApp.Services
 
                 //Convert the JSON string data into our currency object
                 JsonConvert.PopulateObject(dataAsString, CurrencyObject);
-
+            throw new Exception("Meow");
                 return CurrencyObject;
 
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+           
         }
         public decimal GetCryptoPrice(string cryptoSymbol)
         {
