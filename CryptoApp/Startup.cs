@@ -8,6 +8,7 @@ using CryptoApp.Data;
 using CryptoApp.Models;
 using CryptoApp.Services;
 using CryptoApp.Filters;
+using System.Globalization;
 
 namespace CryptoApp
 {
@@ -59,6 +60,12 @@ namespace CryptoApp
             {
                 app.UseExceptionHandler("/Crypto/Error");
             }
+
+            var cultureInfo = new CultureInfo("en-US");
+            cultureInfo.NumberFormat.CurrencySymbol = "$";
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             app.UseStaticFiles();
 
