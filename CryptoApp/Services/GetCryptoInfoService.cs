@@ -1,4 +1,5 @@
 ﻿using CryptoApp.Models;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -9,7 +10,6 @@ namespace CryptoApp.Services
 {
     public class GetCryptoInfoService
     {
-
         public GetCryptoInfoService()
         {
 
@@ -34,6 +34,7 @@ namespace CryptoApp.Services
             }
         }
         
+        [ExceptionFilter]
         public async Task<CurrencyModel> GetCryptoObject(string cryptoSymbol)
         {
             try
