@@ -18,27 +18,27 @@ namespace CryptoApp.Services
 
         public async Task<CurrencyModel> GetCryptoObject(string cryptoSymbol)
         {
-            
-                string getAPIString = $"https://min-api.cryptocompare.com/data/pricemultifull?fsyms={cryptoSymbol}&tsyms=USD,EUR&api_key=a9635f00f6b5c85f2579780156071dd8e0dea96246d246f076ff4153f470dbca";
 
-                CurrencyModel CurrencyObject = new CurrencyModel();
-                var client = new HttpClient();
+            string getAPIString = $"https://min-api.cryptocompare.com/data/pricemultifull?fsyms={cryptoSymbol}&tsyms=USD,EUR&api_key=a9635f00f6b5c85f2579780156071dd8e0dea96246d246f076ff4153f470dbca";
 
-                var apiresult = await client.GetAsync(getAPIString);
-                dynamic JSONResult = await apiresult.Content.ReadAsStringAsync();
+            CurrencyModel CurrencyObject = new CurrencyModel();
+            HttpClient client = new HttpClient();
 
-                //Takes the JSON from the api and turns it into a JObject so we can select where in the JSON we want to get data
-                JObject currencyData = JObject.Parse(JSONResult);
+            var apiresult = await client.GetAsync(getAPIString);
+            dynamic JSONResult = await apiresult.Content.ReadAsStringAsync();
 
-                //Breaks away unnecessary data from the API response in this case RAW/BTC/USD...
-                JToken onlyNecessaryData = currencyData["RAW"][cryptoSymbol]["USD"];
+            //Takes the JSON from the api and turns it into a JObject so we can select where in the JSON we want to get data
+            JObject currencyData = JObject.Parse(JSONResult);
 
-                var dataAsString = onlyNecessaryData.ToString();
+            //Breaks away unnecessary data from the API response in this case RAW/BTC/USD...
+            JToken onlyNecessaryData = currencyData["RAW"][cryptoSymbol]["USD"];
 
-                //Convert the JSON string data into our currency object
-                JsonConvert.PopulateObject(dataAsString, CurrencyObject);
-           
-                return CurrencyObject;
+            var dataAsString = onlyNecessaryData.ToString();
+
+            //Convert the JSON string data into our currency object
+            JsonConvert.PopulateObject(dataAsString, CurrencyObject);
+
+            return CurrencyObject;
 
         }
         public decimal GetCryptoPrice(string cryptoSymbol)
