@@ -12,7 +12,6 @@ namespace CryptoApp.Services
         {
             _applicationDbContext = demoContext;
         }
-
         public void CreateExceptionRecord(CreateExceptionLogCommand cmd)
         {
             var exceptionLogRecord = new ExceptionLog
