@@ -5,12 +5,11 @@ using CryptoApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace CryptoApp.Controllers
 {
-   
+
     [HandleException]
     [ValidateModel]
     public class CryptoController : Controller
@@ -78,7 +77,6 @@ namespace CryptoApp.Controllers
                 LTC = user.LTC, //Number of crypto owned
                 DOGE = user.DOGE,//Number of crypto owned
                 CryptoSymbol = cryptoSymbol,
-                // AmountToBuyOrSell = amountToSell
             };
 
             SellViewModel sell = new SellViewModel
@@ -156,7 +154,6 @@ namespace CryptoApp.Controllers
             {
                 return RedirectToAction("Wallet", "Crypto");
             }
-          
         }
 
         [Authorize]

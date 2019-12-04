@@ -63,7 +63,6 @@ namespace CryptoApp
 
             var cultureInfo = new CultureInfo("en-US");
             cultureInfo.NumberFormat.CurrencySymbol = "$";
-
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 

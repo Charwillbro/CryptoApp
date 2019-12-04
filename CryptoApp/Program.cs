@@ -15,7 +15,7 @@ namespace CryptoApp
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-             
+
             .ConfigureLogging(logging =>
             {
                 // clear default logging providers
@@ -29,7 +29,6 @@ namespace CryptoApp
 
             })
 
-        
         .ConfigureLogging(builder => builder.AddConsole())
                 .Build();
     }
