@@ -5,7 +5,7 @@ namespace CryptoApp.Models
     public class SellViewModel
     {
         [Display(Name = "Cash on Hand: ")]
-        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal USD { get; set; }
 
         [Display(Name = "CryptoCurrency Denomination: ")]
